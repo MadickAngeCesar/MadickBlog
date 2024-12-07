@@ -4,7 +4,7 @@ const nextConfig = {
   experimental: {
     serverActions: true,
     esmExternals: true,
-    serverComponentsExternalPackages: ['@prisma/client', '@auth/prisma-adapter']
+    serverComponentsExternalPackages: ['@prisma/client', 'bcrypt']
   },
   webpack: (config, { isServer }) => {
     if (isServer) {
@@ -14,12 +14,16 @@ const nextConfig = {
         layers: true
       };
     }
+    config.module.rules.push({
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader', 'postcss-loader'],
+    });
     return config;
   },
   output: 'standalone',
   images: {
     unoptimized: true,
-    domains: ['github.com', 'avatars.githubusercontent.com', 'lh3.googleusercontent.com']
+    domains: ['github.com', 'avatars.githubusercontent.com', 'lh3.googleusercontent.com', 'avatars.githubusercontent.com']
   },
   eslint: {
     ignoreDuringBuilds: true
