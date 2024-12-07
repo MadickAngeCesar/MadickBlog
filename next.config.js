@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/blog',
+  //basePath: '/blog',
   experimental: {
     serverActions: true,
     esmExternals: true,
