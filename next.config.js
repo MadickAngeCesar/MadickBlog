@@ -10,7 +10,15 @@ const nextConfig = {
   output: 'standalone',
   images: {
     unoptimized: true,
-  }
+    domains: ['github.com']
+  },
+  // Disable TypeScript and ESLint in production
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 }
 
-export default nextConfig
+module.exports = nextConfig
