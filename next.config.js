@@ -12,13 +12,12 @@ const nextConfig = {
     unoptimized: true,
     domains: ['github.com']
   },
-  // Disable TypeScript and ESLint in production
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: true
   },
-}
+  typescript: {
+    ignoreBuildErrors: true
+  }
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
