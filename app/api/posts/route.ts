@@ -21,6 +21,9 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const search = searchParams.get('search')?.toLowerCase() || '';
 
+    // Add connection test
+    await prisma.$connect();
+    
     const posts = await prisma.post.findMany({
       where: search ? {
         OR: [
@@ -30,23 +33,37 @@ export async function GET(request: Request) {
       } : undefined,
       include: {
         comments: true,
+        author: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
       },
       orderBy: {
         createdAt: 'desc'
       }
     });
 
-    return NextResponse.json(posts.map(post => ({
-      ...post,
-      commentCount: post.comments.length,
-      createdAt: post.createdAt.toISOString(),
-    })));
+    return NextResponse.json({
+      posts: posts.map(post => ({
+        id: post.id,
+        title: post.title,
+        content: post.content,
+        likes: post.likes,
+        commentCount: post.comments.length,
+        createdAt: post.createdAt.toISOString(),
+        author: post.author,
+      }))
+    });
   } catch (error) {
     console.error('Error fetching posts:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch posts' },
+      { error: 'Failed to fetch posts', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
+  } finally {
+    await prisma.$disconnect();
   }
 }
 
