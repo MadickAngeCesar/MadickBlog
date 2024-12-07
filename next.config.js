@@ -2,10 +2,8 @@
 const nextConfig = {
   basePath: '/blog',
   experimental: {
-    serverActions: {
-      allowedOrigins: ["*"],
-      bodySizeLimit: "2mb"
-    }
+    serverActions: true,
+    serverComponentsExternalPackages: ['@prisma/client']
   },
   output: 'standalone',
   images: {

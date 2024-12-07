@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(
   request: Request,
   { params }: { params: { id: string } }
@@ -9,14 +11,33 @@ export async function POST(
     const body = await request.json();
     const postId = parseInt(params.id);
 
+    if (!postId || isNaN(postId)) {
+      return NextResponse.json(
+        { error: 'Invalid post ID' },
+        { status: 400 }
+      );
+    }
+
+    // Verify the post exists
+    const post = await prisma.post.findUnique({
+      where: { id: postId }
+    });
+
+    if (!post) {
+      return NextResponse.json(
+        { error: 'Post not found' },
+        { status: 404 }
+      );
+    }
+
     // In a real app, get the user from the session
     const user = await prisma.user.findFirst();
     
     if (!user) {
-      return new NextResponse(JSON.stringify({ error: 'User not found' }), {
-        status: 404,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return NextResponse.json(
+        { error: 'User not found' },
+        { status: 404 }
+      );
     }
 
     const comment = await prisma.comment.create({
@@ -35,15 +56,12 @@ export async function POST(
       },
     });
 
-    return new NextResponse(JSON.stringify(comment), {
-      status: 201,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return NextResponse.json(comment, { status: 201 });
   } catch (error) {
     console.error('Failed to create comment:', error);
-    return new NextResponse(JSON.stringify({ error: 'Internal Server Error' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }
