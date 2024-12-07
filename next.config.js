@@ -3,12 +3,12 @@ const nextConfig = {
   basePath: '/blog',
   experimental: {
     serverActions: true,
-    serverComponentsExternalPackages: ['@prisma/client']
+    serverComponentsExternalPackages: ['@prisma/client', '@auth/prisma-adapter']
   },
   output: 'standalone',
   images: {
     unoptimized: true,
-    domains: ['github.com']
+    domains: ['github.com', 'avatars.githubusercontent.com', 'lh3.googleusercontent.com']
   },
   eslint: {
     ignoreDuringBuilds: true
