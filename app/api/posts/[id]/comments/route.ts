@@ -1,11 +1,12 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function POST(
-  request: Request,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   if (!params.id) {
@@ -13,7 +14,7 @@ export async function POST(
   }
 
   try {
-    const body = await request.json();
+    const body = await req.json();
     const postId = parseInt(params.id);
 
     if (!postId || isNaN(postId)) {
@@ -60,10 +61,10 @@ export async function POST(
     });
 
     return NextResponse.json(comment, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Failed to create comment:', error);
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: error?.message || 'Internal Server Error' },
       { status: 500 }
     );
   }
