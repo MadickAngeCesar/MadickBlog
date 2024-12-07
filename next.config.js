@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  //basePath: '/blog',
   experimental: {
     serverActions: true,
     esmExternals: true,
@@ -8,11 +7,25 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
-    domains: ['github.com', 'avatars.githubusercontent.com', 'lh3.googleusercontent.com']
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'github.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com'
+      }
+    ]
   },
   eslint: {
     ignoreDuringBuilds: true
   },
+  output: 'standalone',
   typescript: {
     ignoreBuildErrors: true
   }

@@ -1,4 +1,3 @@
-import { colors } from './lib/theme.js';
 import typography from '@tailwindcss/typography';
 
 /** @type {import('tailwindcss').Config} */
@@ -10,51 +9,93 @@ const config = {
   ],
   darkMode: 'class',
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       colors: {
-        primary: colors.primary,
-        accent: colors.accent,
-        dark: colors.dark,
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {
-            '--tw-prose-body': theme('colors.gray[900]'),
-            '--tw-prose-headings': theme('colors.black'),
-            '--tw-prose-lead': theme('colors.gray[900]'),
-            '--tw-prose-links': theme('colors.primary[600]'),
-            '--tw-prose-bold': theme('colors.black'),
-            '--tw-prose-counters': theme('colors.gray[600]'),
-            '--tw-prose-bullets': theme('colors.gray[400]'),
-            '--tw-prose-hr': theme('colors.gray[200]'),
-            '--tw-prose-quotes': theme('colors.gray[900]'),
-            '--tw-prose-quote-borders': theme('colors.primary[500]'),
-            '--tw-prose-captions': theme('colors.gray[600]'),
-            '--tw-prose-code': theme('colors.primary[600]'),
-            '--tw-prose-pre-code': theme('colors.white'),
-            '--tw-prose-pre-bg': theme('colors.gray[900]'),
-            '--tw-prose-th-borders': theme('colors.gray[300]'),
-            '--tw-prose-td-borders': theme('colors.gray[200]'),
+            '--tw-prose-body': theme('colors.foreground'),
+            '--tw-prose-headings': theme('colors.primary.foreground'),
+            '--tw-prose-lead': theme('colors.foreground'),
+            '--tw-prose-links': theme('colors.accent.DEFAULT'),
+            '--tw-prose-bold': theme('colors.primary.foreground'),
+            '--tw-prose-counters': theme('colors.muted.foreground'),
+            '--tw-prose-bullets': theme('colors.muted.DEFAULT'),
+            '--tw-prose-hr': theme('colors.border'),
+            '--tw-prose-quotes': theme('colors.foreground'),
+            '--tw-prose-quote-borders': theme('colors.accent.DEFAULT'),
+            '--tw-prose-captions': theme('colors.muted.foreground'),
+            '--tw-prose-code': theme('colors.accent.DEFAULT'),
+            '--tw-prose-pre-code': theme('colors.foreground'),
+            '--tw-prose-pre-bg': theme('colors.background'),
+            '--tw-prose-th-borders': theme('colors.border'),
+            '--tw-prose-td-borders': theme('colors.border'),
           },
         },
         invert: {
           css: {
-            '--tw-prose-body': theme('colors.gray[200]'),
-            '--tw-prose-headings': theme('colors.white'),
-            '--tw-prose-lead': theme('colors.gray[200]'),
-            '--tw-prose-links': theme('colors.primary[300]'),
-            '--tw-prose-bold': theme('colors.white'),
-            '--tw-prose-counters': theme('colors.gray[400]'),
-            '--tw-prose-bullets': theme('colors.gray[600]'),
-            '--tw-prose-hr': theme('colors.gray[700]'),
-            '--tw-prose-quotes': theme('colors.gray[200]'),
-            '--tw-prose-quote-borders': theme('colors.primary[400]'),
-            '--tw-prose-captions': theme('colors.gray[400]'),
-            '--tw-prose-code': theme('colors.white'),
-            '--tw-prose-pre-code': theme('colors.white'),
-            '--tw-prose-pre-bg': theme('colors.gray[900]'),
-            '--tw-prose-th-borders': theme('colors.gray[600]'),
-            '--tw-prose-td-borders': theme('colors.gray[700]'),
+            '--tw-prose-body': theme('colors.background'),
+            '--tw-prose-headings': theme('colors.primary.DEFAULT'),
+            '--tw-prose-lead': theme('colors.background'),
+            '--tw-prose-links': theme('colors.accent.DEFAULT'),
+            '--tw-prose-bold': theme('colors.primary.DEFAULT'),
+            '--tw-prose-counters': theme('colors.muted.DEFAULT'),
+            '--tw-prose-bullets': theme('colors.muted.DEFAULT'),
+            '--tw-prose-hr': theme('colors.border'),
+            '--tw-prose-quotes': theme('colors.background'),
+            '--tw-prose-quote-borders': theme('colors.accent.DEFAULT'),
+            '--tw-prose-captions': theme('colors.muted.DEFAULT'),
+            '--tw-prose-code': theme('colors.accent.DEFAULT'),
+            '--tw-prose-pre-code': theme('colors.background'),
+            '--tw-prose-pre-bg': theme('colors.background'),
+            '--tw-prose-th-borders': theme('colors.border'),
+            '--tw-prose-td-borders': theme('colors.border'),
           },
         },
       }),
@@ -63,6 +104,6 @@ const config = {
   plugins: [
     typography,
   ],
-};
+}
 
 export default config;
