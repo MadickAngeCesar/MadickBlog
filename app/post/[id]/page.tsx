@@ -24,11 +24,9 @@ interface Post {
   id: number;
   title: string;
   content: string;
-  likes: number;
-  comments: Comment[];
   createdAt: string;
-  author: Author;
-  authorId: string;
+  author: Author | null;
+  comments: Comment[];
 }
 
 export default function PostPage() {
@@ -181,10 +179,9 @@ export default function PostPage() {
             id={post.id}
             title={post.title}
             content={post.content}
-            likes={post.likes}
-            comments={post.comments}
             createdAt={post.createdAt}
             author={post.author}
+            comments={post.comments}
           />
         </div>
       </main>

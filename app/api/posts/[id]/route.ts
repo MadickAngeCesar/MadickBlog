@@ -54,20 +54,17 @@ export async function GET(
       );
     }
 
-    // Update view count
-    await prisma.post.update({
-      where: { id },
-      data: {
-        views: { increment: 1 }
-      }
-    });
-
     return NextResponse.json({
-      ...post,
+      id: post.id,
+      title: post.title,
+      content: post.content,
       createdAt: post.createdAt.toISOString(),
+      author: post.author,
       comments: post.comments.map(comment => ({
-        ...comment,
-        createdAt: comment.createdAt.toISOString()
+        id: comment.id,
+        content: comment.content,
+        createdAt: comment.createdAt.toISOString(),
+        author: comment.author
       }))
     });
   } catch (error) {

@@ -41,8 +41,8 @@ export default function Header() {
               href="/" 
               className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 isDark
-                  ? 'text-white hover:text-primary-300 hover:bg-dark-700'
-                  : 'text-black hover:text-primary-600 hover:bg-dark-100'
+                  ? 'text-white hover:text-primary-200 hover:bg-dark-700'
+                  : 'text-gray-900 hover:text-primary-700 hover:bg-dark-100'
               }`}
             >
               Home
@@ -51,8 +51,8 @@ export default function Header() {
               href="/write" 
               className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 isDark
-                  ? 'text-white hover:text-primary-300 hover:bg-dark-700'
-                  : 'text-black hover:text-primary-600 hover:bg-dark-100'
+                  ? 'text-white hover:text-primary-200 hover:bg-dark-700'
+                  : 'text-gray-900 hover:text-primary-700 hover:bg-dark-100'
               }`}
             >
               Write
@@ -142,8 +142,8 @@ export default function Header() {
                 href="/"
                 className={`block px-3 py-2 rounded-lg text-base font-medium transition-colors ${
                   isDark
-                    ? 'text-white hover:text-primary-300 hover:bg-dark-700'
-                    : 'text-black hover:text-primary-600 hover:bg-dark-100'
+                    ? 'text-white hover:text-primary-200 hover:bg-dark-700'
+                    : 'text-gray-900 hover:text-primary-700 hover:bg-dark-100'
                 }`}
               >
                 Home
@@ -152,8 +152,8 @@ export default function Header() {
                 href="/write"
                 className={`block px-3 py-2 rounded-lg text-base font-medium transition-colors ${
                   isDark
-                    ? 'text-white hover:text-primary-300 hover:bg-dark-700'
-                    : 'text-black hover:text-primary-600 hover:bg-dark-100'
+                    ? 'text-white hover:text-primary-200 hover:bg-dark-700'
+                    : 'text-gray-900 hover:text-primary-700 hover:bg-dark-100'
                 }`}
               >
                 Write

@@ -21,15 +21,15 @@ export default function PostCard({ id, title, likes, commentCount, createdAt }: 
         {title}
       </h2>
       <div className="flex items-center justify-between">
-        <div className="text-sm text-gray-500 dark:text-gray-400">
+        <div className="text-sm text-gray-700 dark:text-gray-300">
           {new Date(createdAt).toLocaleDateString()}
         </div>
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+          <div className="flex items-center gap-1 text-gray-700 dark:text-gray-300">
             <Heart className="h-4 w-4" />
             <span className="text-sm">{likes}</span>
           </div>
-          <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+          <div className="flex items-center gap-1 text-gray-700 dark:text-gray-300">
             <MessageCircle className="h-4 w-4" />
             <span className="text-sm">{commentCount}</span>
           </div>

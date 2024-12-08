@@ -24,7 +24,7 @@ export default function Sidebar() {
           <h2 className="font-medium text-gray-900 dark:text-white mb-2">
             Welcome to MadickBlog
           </h2>
-          <p className="text-sm text-gray-600 dark:text-gray-300">
+          <p className="text-sm text-gray-700 dark:text-gray-300">
             Share your thoughts and ideas with the world. Start writing your first post today!
           </p>
         </div>
@@ -33,7 +33,7 @@ export default function Sidebar() {
           <h2 className="font-medium text-primary-900 dark:text-primary-100 mb-2">
             Quick Tips
           </h2>
-          <ul className="text-sm space-y-2 text-primary-700 dark:text-primary-300">
+          <ul className="text-sm space-y-2 text-primary-800 dark:text-primary-200">
             <li>• Use markdown for formatting</li>
             <li>• Add code snippets with ```</li>
             <li>• Include images with ![alt](url)</li>

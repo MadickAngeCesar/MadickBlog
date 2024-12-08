@@ -86,27 +86,56 @@ export async function POST(request: Request) {
       );
     }
 
+    // Create default user if needed
+    let defaultUser = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { email: 'default@example.com' },
+          { email: null }
+        ]
+      }
+    });
+
+    if (!defaultUser) {
+      try {
+        defaultUser = await prisma.user.create({
+          data: {
+            email: 'default@example.com',
+            name: 'Default User'
+          }
+        });
+      } catch (userError) {
+        console.error('Error creating default user:', userError);
+        // Try to create a user without email as fallback
+        defaultUser = await prisma.user.create({
+          data: {
+            name: 'Default User'
+          }
+        });
+      }
+    }
+
+    // Create the post
     const post = await prisma.post.create({
       data: {
         title: title.trim(),
         content: content.trim(),
-        likes: 0,
-        authorId: 1, // Use the default user
-      },
-      include: {
-        comments: true,
+        published: true,
+        authorId: defaultUser.id,
       }
     });
 
     return NextResponse.json({
-      ...post,
-      commentCount: 0,
+      id: post.id,
+      title: post.title,
+      content: post.content,
       createdAt: post.createdAt.toISOString(),
     }, { status: 201 });
+
   } catch (error) {
     console.error('Error creating post:', error);
     return NextResponse.json(
-      { error: 'Failed to create post' },
+      { error: 'Failed to create post. Please try again.' },
       { status: 500 }
     );
   }
