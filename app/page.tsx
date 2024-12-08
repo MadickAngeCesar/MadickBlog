@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import PostCard from '@/components/PostCard';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import Sidebar from '@/components/Sidebar';
+import { useEffect, useState } from "react";
+import PostCard from "@/components/PostCard";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Sidebar from "@/components/Sidebar";
 
 interface Post {
   id: number;
@@ -17,7 +17,7 @@ interface Post {
 export default function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetchPosts();
@@ -25,15 +25,15 @@ export default function HomePage() {
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch('/api/posts');
+      const response = await fetch("/api/posts");
       if (!response.ok) {
-        throw new Error('Failed to load posts');
+        throw new Error("Failed to load posts");
       }
       const data = await response.json();
       setPosts(data);
     } catch (err) {
-      setError('Failed to load posts');
-      console.error('Error fetching posts:', err);
+      setError("Failed to load posts");
+      console.error("Error fetching posts:", err);
     } finally {
       setIsLoading(false);
     }

@@ -21,8 +21,13 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const search = searchParams.get('search')?.toLowerCase() || '';
 
-    // Add connection test
-    await prisma.$connect();
+    try {
+      await prisma.$connect();
+      console.log('Successfully connected to database');
+    } catch (connError) {
+      console.error('Database connection error:', connError);
+      return NextResponse.json([]);
+    }
     
     const posts = await prisma.post.findMany({
       where: search ? {
@@ -45,23 +50,18 @@ export async function GET(request: Request) {
       }
     });
 
-    return NextResponse.json({
-      posts: posts.map(post => ({
-        id: post.id,
-        title: post.title,
-        content: post.content,
-        likes: post.likes,
-        commentCount: post.comments.length,
-        createdAt: post.createdAt.toISOString(),
-        author: post.author,
-      }))
-    });
+    const formattedPosts = posts.map(post => ({
+      id: post.id,
+      title: post.title,
+      likes: post.likes,
+      commentCount: post.comments.length,
+      createdAt: post.createdAt.toISOString(),
+    }));
+
+    return NextResponse.json(formattedPosts);
   } catch (error) {
-    console.error('Error fetching posts:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch posts', details: error instanceof Error ? error.message : 'Unknown error' },
-      { status: 500 }
-    );
+    console.error('Error in /api/posts route:', error);
+    return NextResponse.json([]);
   } finally {
     await prisma.$disconnect();
   }
