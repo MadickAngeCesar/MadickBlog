@@ -87,55 +87,60 @@ export async function POST(request: Request) {
     }
 
     // Create default user if needed
-    let defaultUser = await prisma.user.findFirst({
-      where: {
-        OR: [
-          { email: 'default@example.com' },
-          { email: null }
-        ]
-      }
-    });
+    let defaultUser;
+    try {
+      defaultUser = await prisma.user.findFirst({
+        where: {
+          OR: [
+            { email: 'default@example.com' },
+            { email: null }
+          ]
+        }
+      });
 
-    if (!defaultUser) {
-      try {
-        defaultUser = await prisma.user.create({
-          data: {
-            email: 'default@example.com',
-            name: 'Default User'
-          }
-        });
-      } catch (userError) {
-        console.error('Error creating default user:', userError);
-        // Try to create a user without email as fallback
+      if (!defaultUser) {
         defaultUser = await prisma.user.create({
           data: {
             name: 'Default User'
           }
         });
       }
+    } catch (userError) {
+      console.error('Error with user:', userError);
+      return NextResponse.json(
+        { error: 'Failed to handle user' },
+        { status: 500 }
+      );
     }
 
     // Create the post
-    const post = await prisma.post.create({
-      data: {
-        title: title.trim(),
-        content: content.trim(),
-        published: true,
-        authorId: defaultUser.id,
-      }
-    });
+    try {
+      const post = await prisma.post.create({
+        data: {
+          title: title.trim(),
+          content: content.trim(),
+          published: true,
+          authorId: defaultUser.id,
+        }
+      });
 
-    return NextResponse.json({
-      id: post.id,
-      title: post.title,
-      content: post.content,
-      createdAt: post.createdAt.toISOString(),
-    }, { status: 201 });
-
+      return NextResponse.json({
+        id: post.id,
+        title: post.title,
+        content: post.content,
+        createdAt: post.createdAt.toISOString(),
+      }, { status: 201 });
+    } catch (postError) {
+      console.error('Error creating post:', postError);
+      return NextResponse.json(
+        { error: 'Failed to create post' },
+        { status: 500 }
+      );
+    }
   } catch (error) {
-    console.error('Error creating post:', error);
+    console.error('Error in POST /api/posts:', error);
     return NextResponse.json(
-      { error: 'Failed to create post. Please try again.' },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }
